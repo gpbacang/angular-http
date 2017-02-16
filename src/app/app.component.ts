@@ -7,6 +7,8 @@ import { HttpService } from './http.service';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
+  items: any[] = [];
+
   constructor(private httpService: HttpService) {}
 
 
@@ -14,6 +16,19 @@ export class AppComponent {
     this.httpService.sendData({username: username, email: email})
       .subscribe(
         data => console.log(data)
+      );
+  }
+
+  onGetData() {
+    this.httpService.getOwnData()
+      .subscribe(
+        data => {
+          const myArray = []
+          for (let key in data) {
+            myArray.push(data[key]);
+          }
+          this.items = myArray;
+        }
       );
   }
 }
